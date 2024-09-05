@@ -1,0 +1,23 @@
+$currentUserName = "$($env:USERDOMAIN)\$($env:USERNAME)"
+
+$groupName = "PMCFormerAdmins-test"
+
+
+$group = Get-LocalGroup -Name $groupName -ErrorAction SilentlyContinue
+
+if (!$group) {
+    Write-Host "Group $groupName does not exist. Skipping membership check."
+    exit 1
+} else {
+
+    $isMember = [System.Security.Principal.WindowsPrincipal]::new([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole($groupName)
+
+    if (!$isMember) {
+        Write-Host "User $currentUserName not exist in $groupName."
+        exit 1
+
+    } else {
+        Write-Host "User $currentUserName is already a member of group $groupName."
+        exit 0
+    }
+}
