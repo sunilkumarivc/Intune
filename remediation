@@ -1,0 +1,22 @@
+$currentUserName = "$($env:USERDOMAIN)\$($env:USERNAME)"
+
+$groupName = "PMCFormerAdmins-test"
+
+$group = Get-LocalGroup -Name $groupName -ErrorAction SilentlyContinue
+
+if (!$group) {
+    Write-Host "Group $groupName does not exist. Skipping membership check."
+    #New-LocalGroup -Name $groupName -Description "This group is for Thycotic PMC Deployment" -ErrorAction SilentlyContinue  
+    Net localgroup $GroupName /add
+} 
+
+$group = Get-LocalGroup -Name $groupName -ErrorAction SilentlyContinue
+$isMember = [System.Security.Principal.WindowsPrincipal]::new([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole($groupName)
+
+if (!$isMember) {
+    #Add-LocalGroupMember -Group $groupName -Member $currentUserName -ErrorAction SilentlyContinue
+    Net localgroup $groupName $currentUserName /add
+    Write-Host "User $currentUserName added to group $groupName."
+} else {
+  Write-Host "User $currentUserName is already a member of group $groupName."
+}
