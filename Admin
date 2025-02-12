@@ -1,0 +1,148 @@
+$user = ((Get-CimInstance Win32_Process -Filter 'name = "explorer.exe"' | Select-Object -First 1 | Invoke-CimMethod -MethodName GetOwner).User)
+$username = "ead\" + $user
+$Group = "Administrators"
+Add-LocalGroupMember -Group $Group -Member "$username"
+Write-Host "$username added sucessfull to the $Group"
+
+# Define the action (replace with your desired action)
+$encodedCommand = "IwAgAEcAZQB0ACAAdABoAGUAIABjAHUAcgByAGUAbgB0ACAAdQBzAGUAcgAgAHIAdQBuAG4AaQBuAGcAIAB0AGgAZQAgAHMAYwByAGkAcAB0AAoAJAB1AHMAZQByACAAPQAgACgAKABHAGUAdAAtAEMAaQBtAEkAbgBzAHQAYQBuAGMAZQAgAFcAaQBuADMAMgBfAFAAcgBvAGMAZQBzAHMAIAAtAEYAaQBsAHQAZQByACAAJwBuAGEAbQBlACAAPQAgACIAZQB4AHAAbABvAHIAZQByAC4AZQB4AGUAIgAnACAAfAAgAFMAZQBsAGUAYwB0AC0ATwBiAGoAZQBjAHQAIAAtAEYAaQByAHMAdAAgADEAIAB8ACAASQBuAHYAbwBrAGUALQBDAGkAbQBNAGUAdABoAG8AZAAgAC0ATQBlAHQAaABvAGQATgBhAG0AZQAgAEcAZQB0AE8AdwBuAGUAcgApAC4AVQBzAGUAcgApAAoAJAB1AHMAZQByAG4AYQBtAGUAIAA9ACAAIgBlAGEAZABcACIAIAArACAAJAB1AHMAZQByAAoAJABHAHIAbwB1AHAAIAA9ACAAIgBBAGQAbQBpAG4AaQBzAHQAcgBhAHQAbwByAHMAIgAKAAoAIwAgAFIAZQBtAG8AdgBlACAAdABoAGUAIABjAHUAcgByAGUAbgB0ACAAdQBzAGUAcgAgAGYAcgBvAG0AIAB0AGgAZQAgAEEAZABtAGkAbgBpAHMAdAByAGEAdABvAHIAcwAgAGcAcgBvAHUAcAAKAFIAZQBtAG8AdgBlAC0ATABvAGMAYQBsAEcAcgBvAHUAcABNAGUAbQBiAGUAcgAgAC0ARwByAG8AdQBwACAAJABHAHIAbwB1AHAAIAAtAE0AZQBtAGIAZQByACAAIgAkAHUAcwBlAHIAbgBhAG0AZQAiACAALQBDAG8AbgBmAGkAcgBtADoAJABmAGEAbABzAGUACgBXAHIAaQB0AGUALQBIAG8AcwB0ACAAIgAkAHUAcwBlAHIAbgBhAG0AZQAgAHMAdQBjAGMAZQBzAHMAZgB1AGwAbAB5ACAAcgBlAG0AbwB2AGUAZAAgAGYAcgBvAG0AIAB0AGgAZQAgACQARwByAG8AdQBwACIACgAjACAAVABhAHMAawAgAG4AYQBtAGUAIAB0AG8AIABkAGUAbABlAHQAZQAKACQAVABhAHMAawBOAGEAbQBlACAAPQAgACIASQBuAHQAdQBuAGUALQBSAGUAbQBvAHYAZQAtAEEAZABtAGkAbgAtAFMAeQBuAGMAIgAKAAoAIwAgAEMAaABlAGMAawAgAGkAZgAgAHQAaABlACAAdABhAHMAawAgAGUAeABpAHMAdABzAAoAaQBmACAAKABHAGUAdAAtAFMAYwBoAGUAZAB1AGwAZQBkAFQAYQBzAGsAIAAtAFQAYQBzAGsATgBhAG0AZQAgACQAVABhAHMAawBOAGEAbQBlACAALQBFAHIAcgBvAHIAQQBjAHQAaQBvAG4AIABTAGkAbABlAG4AdABsAHkAQwBvAG4AdABpAG4AdQBlACkAIAB7AAoAIAAgACAAIAAjACAARABlAGwAZQB0AGUAIAB0AGgAZQAgAHQAYQBzAGsACgAgACAAIAAgAFUAbgByAGUAZwBpAHMAdABlAHIALQBTAGMAaABlAGQAdQBsAGUAZABUAGEAcwBrACAALQBUAGEAcwBrAE4AYQBtAGUAIAAkAFQAYQBzAGsATgBhAG0AZQAgAC0AQwBvAG4AZgBpAHIAbQA6ACQAZgBhAGwAcwBlAAoAIAAgACAAIABXAHIAaQB0AGUALQBIAG8AcwB0ACAAIgBUAGgAZQAgAHQAYQBzAGsAIAAnACQAVABhAHMAawBOAGEAbQBlACcAIABoAGEAcwAgAGIAZQBlAG4AIABzAHUAYwBjAGUAcwBzAGYAdQBsAGwAeQAgAGQAZQBsAGUAdABlAGQALgAiAAoAfQAgAGUAbABzAGUAIAB7AAoAIAAgACAAIABXAHIAaQB0AGUALQBIAG8AcwB0ACAAIgBUAGgAZQAgAHQAYQBzAGsAIAAnACQAVABhAHMAawBOAGEAbQBlACcAIABkAG8AZQBzACAAbgBvAHQAIABlAHgAaQBzAHQALgAiAAoAfQAKAAoAIwAgAEQAZQBmAGkAbgBlACAAdABoAGUAIAByAGUAZwBpAHMAdAByAHkAIABwAGEAdABoACAAKABzAGEAbQBlACAAYQBzACAAYQBiAG8AdgBlACkACgAkAHIAZQBnAFAAYQB0AGgAIAA9ACAAIgBIAEsATABNADoAXABTAG8AZgB0AHcAYQByAGUAXABUAGgAbwBtAHMAbwBuAFIAZQB1AHQAZQByAHMAXABRAHUAaQBjAGsAQQBkAG0AaQBuACIACgAKACMAIABSAGUAbQBvAHYAZQAgAHQAaABlACAAcgBlAGcAaQBzAHQAcgB5ACAAawBlAHkAIAB0AG8AIABpAG4AZABpAGMAYQB0AGUAIAB0AGgAZQAgAHMAYwByAGkAcAB0ACAAaQBzACAAbgBvACAAbABvAG4AZwBlAHIAIABwAHIAZQBzAGUAbgB0AAoAaQBmACAAKABUAGUAcwB0AC0AUABhAHQAaAAgACQAcgBlAGcAUABhAHQAaAApACAAewAKACAAIAAgACAAUgBlAG0AbwB2AGUALQBJAHQAZQBtACAALQBQAGEAdABoACAAJAByAGUAZwBQAGEAdABoACAALQBSAGUAYwB1AHIAcwBlACAALQBGAG8AcgBjAGUACgB9AA=="
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ex bypass -encodedcommand $encodedCommand"
+
+# Define the trigger to run one day from now
+$startTime = (Get-Date).AddDays(1)
+$trigger = New-ScheduledTaskTrigger -Once -At $startTime
+
+
+# Define the principal
+$principal = New-ScheduledTaskPrincipal -UserId "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount
+
+# Define the settings to disable power settings and set execution time limit
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 1)
+
+# Register the scheduled task
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Intune-Remove-Admin-Sync" -Description "Task to run the provided command one hour from the current time" -Principal $principal -Settings $settings
+
+Write-Host "Scheduled task 'Intune-Remove-Admin-Sync' has been created with power settings disabled and execution time limit set to 1 hour."
+
+# Define the registry path for the script execution status
+$regPath = "HKLM:\Software\ThomsonReuters\QuickAdmin"
+
+# Create the key if it does not exist
+if (-not (Test-Path $regPath)) {
+    New-Item -Path $regPath -Force | Out-Null
+}
+
+# Record that the script executed successfully
+Set-ItemProperty -Path $regPath -Name "ExecutionStatus" -Value "Success"
+Set-ItemProperty -Path $regPath -Name "ExecutionTime" -Value (Get-Date).ToString("o")
+Set-ItemProperty -Path $regPath -Name "Installed" -Value 1
+
+# Add required assemblies for GUI
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+# Function to show reboot prompt with company logo and enhanced UI
+function Show-RebootPrompt {
+    # Define the path to the logo image
+    $logoPath = "C:\Users\6127892\Downloads\trlogo.png"  # Replace this with your actual logo file path
+
+    # Create the main form
+    $form = New-Object System.Windows.Forms.Form
+    $form.Text = "Quick Admin"
+    $form.Size = New-Object System.Drawing.Size(1000, 800)  # Increased height
+    $form.StartPosition = "CenterScreen"
+    $form.BackColor = [System.Drawing.Color]::White
+    $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
+    $form.MaximizeBox = $false
+    $form.MinimizeBox = $false
+
+    # Add company logo
+    if (Test-Path $logoPath) {
+        $logo = New-Object System.Windows.Forms.PictureBox
+        $logo.Image = [System.Drawing.Image]::FromFile($logoPath)
+        $logo.SizeMode = [System.Windows.Forms.PictureBoxSizeMode]::StretchImage
+        $logo.Width = 250  # Adjusted width
+        $logo.Height = 150  # Adjusted height
+        $logo.Location = New-Object System.Drawing.Point(375, 20)  # Centered horizontally
+        $form.Controls.Add($logo)
+    } else {
+        Write-Host "Logo file not found at $logoPath. Please check the path."
+    }
+
+    # Header label
+    $headerLabel = New-Object System.Windows.Forms.Label
+    $headerLabel.Text = "System Reboot Required"
+    $headerLabel.Font = New-Object System.Drawing.Font("Arial", 20, [System.Drawing.FontStyle]::Bold)
+    $headerLabel.ForeColor = [System.Drawing.Color]::DarkBlue
+    $headerLabel.AutoSize = $true
+    $headerLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
+    $headerLabel.Location = New-Object System.Drawing.Point(300, 200)
+    $form.Controls.Add($headerLabel)
+
+    # Reboot message with line breaks for wrapping
+    $messageLabel = New-Object System.Windows.Forms.Label
+    $messageLabel.Text = "Ta-da! You're officially an admin! Now" + [Environment]::NewLine + "let's give your device a little magic touch. A reboot will sprinkle some extra stardust and make your new powers shine!"
+    $messageLabel.Font = New-Object System.Drawing.Font("Arial", 14, [System.Drawing.FontStyle]::Regular)
+    $messageLabel.ForeColor = [System.Drawing.Color]::Black
+    $messageLabel.AutoSize = $true  # Automatically resize the label based on the text
+    $messageLabel.MaximumSize = New-Object System.Drawing.Size(800, 0)  # Limit the width
+    $messageLabel.Location = New-Object System.Drawing.Point(150, 260)  # Adjusted position for better readability
+    $messageLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
+    $form.Controls.Add($messageLabel)
+
+    # Yes button
+    $yesButton = New-Object System.Windows.Forms.Button
+    $yesButton.Text = "Yes, Reboot Now"
+    $yesButton.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Bold)
+    $yesButton.Size = New-Object System.Drawing.Size(200, 60)
+    $yesButton.Location = New-Object System.Drawing.Point(300, 450)
+    $yesButton.BackColor = [System.Drawing.Color]::Green
+    $yesButton.ForeColor = [System.Drawing.Color]::White
+    $yesButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+    $yesButton.Add_Click({
+        $form.DialogResult = [System.Windows.Forms.DialogResult]::Yes
+        $form.Close()
+    })
+    $form.Controls.Add($yesButton)
+
+    # No button
+    $noButton = New-Object System.Windows.Forms.Button
+    $noButton.Text = "No, Postpone"
+    $noButton.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Bold)
+    $noButton.Size = New-Object System.Drawing.Size(200, 60)
+    $noButton.Location = New-Object System.Drawing.Point(520, 450)
+    $noButton.BackColor = [System.Drawing.Color]::Red
+    $noButton.ForeColor = [System.Drawing.Color]::White
+    $noButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+    $noButton.Add_Click({
+        $form.DialogResult = [System.Windows.Forms.DialogResult]::No
+        $form.Close()
+    })
+    $form.Controls.Add($noButton)
+
+    # Admin privileges info label
+    $infoLabel = New-Object System.Windows.Forms.Label
+    $infoLabel.Text = "Note: Admin privileges will be active for 24 hours only. Please plan your tasks accordingly."
+    $infoLabel.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Italic)
+    $infoLabel.ForeColor = [System.Drawing.Color]::DarkRed
+    $infoLabel.AutoSize = $true  # Automatically resize the label based on the text
+    $infoLabel.MaximumSize = New-Object System.Drawing.Size(800, 0)  # Limit the width
+    $infoLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
+    $infoLabel.Location = New-Object System.Drawing.Point(100, 550)  # Positioned below buttons
+    $form.Controls.Add($infoLabel)
+
+    # Show the form and return the result
+    return $form.ShowDialog()
+}
+
+# Show the reboot prompt with company logo and get user response
+$response = Show-RebootPrompt
+
+if ($response -eq [System.Windows.Forms.DialogResult]::Yes) {
+    Write-Host "User consented to reboot. Rebooting now..."
+    Restart-Computer -Force
+} else {
+    Write-Host "User declined to reboot. No action will be taken."
+}
+
+
